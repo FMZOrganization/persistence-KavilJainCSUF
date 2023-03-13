@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/black"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/header_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/header"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_text"/>
+
+    <View
+        android:id="@+id/color_view"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="0dp"
+        android:layout_weight="100"
+        android:background="@drawable/color_background"
+        android:paddingTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/red_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:thumb="@drawable/thumb_red"
+            app:track="@drawable/track_red"
+            tools:ignore="NestedWeights" />
+
+        <SeekBar
+            android:id="@+id/red_seekBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="3"
+            android:max="255"
+            android:progressTint="@color/lightRed"
+            android:thumbTint="@color/red" />
+
+        <EditText
+            android:id="@+id/red_editTextNumberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textColor="@color/white"
+            android:padding="2dp"
+            android:hint="@fraction/edit_text_hint"
+            android:textSize="20sp"
+            android:inputType="numberDecimal"
+            tools:ignore="LabelFor"
+            android:background="@drawable/edittext_background"
+            android:autofillHints="Enter the values e.g 0.45" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/green_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:thumb="@drawable/thumb_green"
+            app:track="@drawable/track_green"
+            tools:ignore="NestedWeights" />
+
+        <SeekBar
+            android:id="@+id/green_seekBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="3"
+            android:max="255"
+            android:progressTint="@color/lightGreen"
+            android:thumbTint="@color/green" />
+
+        <EditText
+            android:id="@+id/green_editTextNumberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@fraction/edit_text_hint"
+            android:ems="10"
+            android:padding="2dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:inputType="numberDecimal"
+            tools:ignore="LabelFor"
+            android:background="@drawable/edittext_background"
+            android:autofillHints="Enter the values e.g 0.45" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/blue_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:thumb="@drawable/thumb_blue"
+            app:track="@drawable/track_blue"
+            tools:ignore="NestedWeights" />
+
+        <SeekBar
+            android:id="@+id/blue_seekBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="3"
+            android:max="255"
+            android:progressTint="@color/lightBlue"
+            android:thumbTint="@color/blue" />
+
+        <EditText
+            android:id="@+id/blue_editTextNumberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@fraction/edit_text_hint"
+            android:ems="10"
+            android:padding="2dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:inputType="numberDecimal"
+            tools:ignore="LabelFor"
+            android:background="@drawable/edittext_background"
+            android:autofillHints="Enter the values e.g 0.45" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"
+        android:text="@string/resetButton" />
+
+</LinearLayout>
