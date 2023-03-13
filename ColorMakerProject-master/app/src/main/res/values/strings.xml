@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ColorMaker</string>
+    <string name="header">COLOR MAKER</string>
+    <string name="resetButton">RESET</string>
+</resources>
