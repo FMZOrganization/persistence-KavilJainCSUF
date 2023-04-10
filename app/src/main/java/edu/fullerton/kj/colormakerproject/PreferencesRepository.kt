@@ -16,36 +16,7 @@ class PreferencesRepository private constructor(private val dataStore: DataStore
     private val REDSEEKBAR = intPreferencesKey("redSeekBar")
     private val GREENSEEKBAR = intPreferencesKey("greenSeekBar")
     private val BLUESEEKBAR = intPreferencesKey("blueSeekBar")
-    private val REDTEXT = doublePreferencesKey("redEditText")
-    private val GREENTEXT = doublePreferencesKey("greenEditText")
-    private val BLUETEXT = doublePreferencesKey("blueEditText")
-    private val REDCOLOR = intPreferencesKey("redColor")
-    private val GREENCOLOR = intPreferencesKey("greenColor")
-    private val BLUECOLOR = intPreferencesKey("blueColor")
 
-    val redEditTextValue: Flow<Double> = this.dataStore.data.map { prefs ->
-        prefs[REDTEXT] ?: 0.0
-    }.distinctUntilChanged()
-
-    val greenEditTextValue: Flow<Double> = this.dataStore.data.map { prefs ->
-        prefs[GREENTEXT] ?: 0.0
-    }.distinctUntilChanged()
-
-    val blueEditTextValue: Flow<Double> = this.dataStore.data.map { prefs ->
-        prefs[BLUETEXT] ?: 0.0
-    }.distinctUntilChanged()
-
-    val redColorValue: Flow<Int> = this.dataStore.data.map { prefs ->
-        prefs[REDCOLOR] ?: 0
-    }.distinctUntilChanged()
-
-    val greenColorValue: Flow<Int> = this.dataStore.data.map { prefs ->
-        prefs[GREENCOLOR] ?: 0
-    }.distinctUntilChanged()
-
-    val blueColorValue: Flow<Int> = this.dataStore.data.map { prefs ->
-        prefs[BLUECOLOR] ?: 0
-    }.distinctUntilChanged()
 
     val redSwitchState: Flow<Boolean> = this.dataStore.data.map { prefs ->
         prefs[REDSWITCH] ?: false
@@ -71,17 +42,17 @@ class PreferencesRepository private constructor(private val dataStore: DataStore
         prefs[BLUESEEKBAR] ?: 0
     }.distinctUntilChanged()
 
-    private suspend fun saveColorValue(key: Preferences.Key<Int>, value: Int) {
+    private suspend fun saveRedSeekBarState(key: Preferences.Key<Int>, value: Int) {
         this.dataStore.edit { prefs ->
             prefs[key] = value
         }
     }
-    private suspend fun saveEditTextValue(key: Preferences.Key<Double>, value: Double) {
+    private suspend fun saveGreenSeekBarState(key: Preferences.Key<Int>, value: Int) {
         this.dataStore.edit { prefs ->
             prefs[key] = value
         }
     }
-    private suspend fun saveSeekBarState(key: Preferences.Key<Int>, value: Int) {
+    private suspend fun saveBlueSeekBarState(key: Preferences.Key<Int>, value: Int) {
         this.dataStore.edit { prefs ->
             prefs[key] = value
         }
@@ -92,38 +63,14 @@ class PreferencesRepository private constructor(private val dataStore: DataStore
         }
     }
 
-    suspend fun saveRedEditTextValue(value: Double) {
-        saveEditTextValue(REDTEXT, value)
-    }
-
-    suspend fun saveGreenEditTextValue(value: Double) {
-        saveEditTextValue(GREENTEXT, value)
-    }
-
-    suspend fun saveBlueEditTextValue(value: Double) {
-        saveEditTextValue(BLUETEXT, value)
-    }
-
-    suspend fun saveRedColorValue(value: Int) {
-        saveColorValue(REDCOLOR, value)
-    }
-
-    suspend fun saveGreenColorValue(value: Int) {
-        saveColorValue(GREENCOLOR, value)
-    }
-
-    suspend fun saveBlueColorValue(value: Int) {
-        saveColorValue(BLUECOLOR, value)
-    }
-
     suspend fun saveRedSeekBarValue(value: Int) {
-        saveSeekBarState(REDSEEKBAR, value)
+        saveRedSeekBarState(REDSEEKBAR, value)
     }
     suspend fun saveGreenSeekBarValue(value: Int) {
-        saveSeekBarState(GREENSEEKBAR, value)
+        saveGreenSeekBarState(GREENSEEKBAR, value)
     }
     suspend fun saveBlueSeekBarValue(value: Int) {
-        saveSeekBarState(BLUESEEKBAR, value)
+        saveBlueSeekBarState(BLUESEEKBAR, value)
     }
     suspend fun saveRedSwitchState(value: Boolean) {
         saveSwitchState(REDSWITCH, value)

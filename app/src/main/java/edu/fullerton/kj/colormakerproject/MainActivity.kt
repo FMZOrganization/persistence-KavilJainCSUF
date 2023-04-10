@@ -17,15 +17,12 @@ import androidx.lifecycle.ViewModelProvider
 import kotlin.math.roundToInt
 
 private const val TAG = "MainActivity"
-private const val SAVE_RED_COLOR = "save_red_color"
-private const val SAVE_GREEN_COLOR = "save_blue_color"
-private const val SAVE_BLUE_COLOR = "save_blue_color"
-private const val SAVE_RED_SEEKBAR = "save_red_seekbar"
-private const val SAVE_GREEN_SEEKBAR = "save_green_seekbar"
-private const val SAVE_BLUE_SEEKBAR = "save_blue_seekbar"
-private const val SAVE_RED_EDITTEXT = "save_red_editText"
-private const val SAVE_BLUE_EDITTEXT = "save_blue_editText"
-private const val SAVE_GREEN_EDITTEXT = "save_green_editText"
+private const val SAVE_RED_SWITCH = "redSwitch"
+private const val SAVE_GREEN_SWITCH = "greenSwitch"
+private const val SAVE_BLUE_SWITCH = "blueSwitch"
+private const val SAVE_RED_SEEKBAR = "redSeekBar"
+private const val SAVE_GREEN_SEEKBAR = "GreenSeekBar"
+private const val SAVE_BLUE_SEEKBAR = "BlueSeekBar"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var resetButton: Button
@@ -33,9 +30,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var redSwitch: SwitchCompat
     lateinit var greenSwitch: SwitchCompat
     lateinit var blueSwitch: SwitchCompat
-    private lateinit var redSeekBar: SeekBar
-    private lateinit var blueSeekBar: SeekBar
-    private lateinit var greenSeekBar: SeekBar
+    lateinit var redSeekBar: SeekBar
+    lateinit var blueSeekBar: SeekBar
+    lateinit var greenSeekBar: SeekBar
     lateinit var redEditText: EditText
     lateinit var greenEditText: EditText
     lateinit var blueEditText: EditText
@@ -73,21 +70,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadRedSeekBarValue()
         viewModel.loadGreenSeekBarValue()
         viewModel.loadBlueSeekBarValue()
-        viewModel.loadRedEditTextValue()
-        viewModel.loadGreenEditTextValue()
-        viewModel.loadBlueEditTextValue()
-        viewModel.loadRedColorValue()
-        viewModel.loadGreenColorValue()
-        viewModel.loadBlueColorValue()
         redSeekBar.progress = viewModel.getRedSeekBarValue()
         greenSeekBar.progress = viewModel.getGreenSeekBarValue()
         blueSeekBar.progress = viewModel.getBlueSeekBarValue()
-        redEditText.setText(viewModel.getRedEditTextValue().toString())
-        blueEditText.setText(viewModel.getBlueEditTextValue().toString())
-        greenEditText.setText(viewModel.getGreenEditTextValue().toString())
-        colorRed = viewModel.getRedColorValue()
-        colorGreen = viewModel.getGreenColorValue()
-        colorBlue = viewModel.getBlueColorValue()
+        colorRed = viewModel.getRedSeekBarValue()
+        colorBlue = viewModel.getBlueSeekBarValue()
+        colorGreen = viewModel.getGreenSeekBarValue()
         viewModel.setRedSeekBarState(
             savedInstanceState?.getInt(SAVE_RED_SEEKBAR, 0) ?: 0
         )
@@ -96,26 +84,6 @@ class MainActivity : AppCompatActivity() {
         )
         viewModel.setBlueSeekBarState(
             savedInstanceState?.getInt(SAVE_BLUE_SEEKBAR, 0) ?: 0
-        )
-
-//        this.viewModel.setRedEditTextValue(
-//            savedInstanceState?.getDouble(SAVE_RED_EDITTEXT, 0.0) ?: 0.0
-//        )
-//        this.viewModel.setGreenEditTextValue(
-//            savedInstanceState?.getDouble(SAVE_GREEN_EDITTEXT, 0.0) ?: 0.0
-//        )
-//        this.viewModel.setBlueEditTextValue(
-//            savedInstanceState?.getDouble(SAVE_BLUE_EDITTEXT, 0.0) ?: 0.0
-//        )
-
-        this.viewModel.setRedColorValue(
-            savedInstanceState?.getInt(SAVE_RED_COLOR, 0) ?: 0
-        )
-        this.viewModel.setGreenColorValue(
-            savedInstanceState?.getInt(SAVE_GREEN_COLOR, 0) ?: 0
-        )
-        this.viewModel.setBlueColorValue(
-            savedInstanceState?.getInt(SAVE_BLUE_COLOR, 0) ?: 0
         )
         if(!redSwitch.isChecked && !greenSwitch.isChecked && !blueSwitch.isChecked) {
             Log.d(TAG, "Inside reset")
@@ -180,9 +148,9 @@ class MainActivity : AppCompatActivity() {
                 blueSwitch.toggle()
                 viewModel.setBlueSwitchState(false)
             }
-            redSeekBar.progress = 0
-            greenSeekBar.progress = 0
-            blueSeekBar.progress = 0
+            viewModel.setRedSeekBarState(0)
+            viewModel.setGreenSeekBarState(0)
+            viewModel.setBlueSeekBarState(0)
             redEditText.setText("")
             greenEditText.setText("")
             blueEditText.setText("")
@@ -211,8 +179,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.setRedSwitchState(false)
                 redSeekBar.isEnabled = false
                 redEditText.isEnabled = false
-                colorRed = 0
-            }
+                viewModel.setRedSeekBarState(0)
+                colorRed = viewModel.getRedSeekBarValue()            }
             colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
             headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
         }
@@ -362,7 +330,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
                 if(s.isNotEmpty()){
-                    viewModel.setGreenSeekBarState(viewModel.convertEditTextColorValue(s))
+                    viewModel.setBlueSeekBarState(viewModel.convertEditTextColorValue(s))
                 }
                 colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
                 headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
@@ -384,7 +352,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
                 if(s.isNotEmpty()){
-                    viewModel.setBlueSeekBarState(viewModel.convertEditTextColorValue(s))
+                    viewModel.setGreenSeekBarState(viewModel.convertEditTextColorValue(s))
                 }
                 colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
                 headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
@@ -395,15 +363,12 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.d(TAG, "The counter value is saved")
-        outState.putInt(SAVE_RED_COLOR , viewModel.getRedColorValue())
-        outState.putInt(SAVE_GREEN_COLOR , viewModel.getGreenColorValue())
-        outState.putInt(SAVE_BLUE_COLOR , viewModel.getBlueColorValue())
+        outState.putBoolean(SAVE_RED_SWITCH, viewModel.getRedSwitchState())
+        outState.putBoolean(SAVE_GREEN_SWITCH, viewModel.getGreenSwitchState())
+        outState.putBoolean(SAVE_BLUE_SWITCH, viewModel.getBlueSwitchState())
         outState.putInt(SAVE_RED_SEEKBAR, viewModel.getRedSeekBarValue())
         outState.putInt(SAVE_GREEN_SEEKBAR, viewModel.getGreenSeekBarValue())
         outState.putInt(SAVE_BLUE_SEEKBAR, viewModel.getBlueSeekBarValue())
-        outState.putDouble(SAVE_RED_EDITTEXT, viewModel.getRedEditTextValue())
-        outState.putDouble(SAVE_GREEN_EDITTEXT, viewModel.getGreenEditTextValue())
-        outState.putDouble(SAVE_BLUE_EDITTEXT, viewModel.getBlueEditTextValue())
     }
 
     private val viewModel: MyColorViewModel by lazy {
