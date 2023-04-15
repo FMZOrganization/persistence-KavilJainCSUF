@@ -60,13 +60,9 @@ class MainActivity : AppCompatActivity() {
         greenEditTextCallback()
         blueEditTextCallback()
         Log.d(TAG, "onCreate(Bundle?) called")
-        redSeekBar.isEnabled = false
-        greenSeekBar.isEnabled = false
-        blueSeekBar.isEnabled = false
-        redEditText.isEnabled = false
-        blueEditText.isEnabled = false
-        greenEditText.isEnabled = false
-        viewModel.loadState(this)
+        viewModel.loadRedSwitchState(this)
+        viewModel.loadGreenSwitchState(this)
+        viewModel.loadBlueSwitchState(this)
         viewModel.loadRedSeekBarValue()
         viewModel.loadGreenSeekBarValue()
         viewModel.loadBlueSeekBarValue()
@@ -76,22 +72,14 @@ class MainActivity : AppCompatActivity() {
         colorRed = viewModel.getRedSeekBarValue()
         colorBlue = viewModel.getBlueSeekBarValue()
         colorGreen = viewModel.getGreenSeekBarValue()
-        viewModel.setRedSeekBarState(
-            savedInstanceState?.getInt(SAVE_RED_SEEKBAR, 0) ?: 0
-        )
-        viewModel.setGreenSeekBarState(
-            savedInstanceState?.getInt(SAVE_GREEN_SEEKBAR, 0) ?: 0
-        )
-        viewModel.setBlueSeekBarState(
-            savedInstanceState?.getInt(SAVE_BLUE_SEEKBAR, 0) ?: 0
-        )
+
         if(!redSwitch.isChecked && !greenSwitch.isChecked && !blueSwitch.isChecked) {
             Log.d(TAG, "Inside reset")
-            colorView.background = resources.getDrawable(viewModel.resetBackgroundImage())
+            colorView.background = resources.getDrawable(R.drawable.color_background)
+        } else {
+            colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
+            headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
         }
-        colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
-        headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
-        Log.d(TAG, "...")
     }
 
     override fun onStart() {
@@ -151,6 +139,9 @@ class MainActivity : AppCompatActivity() {
             viewModel.setRedSeekBarState(0)
             viewModel.setGreenSeekBarState(0)
             viewModel.setBlueSeekBarState(0)
+            redSeekBar.progress = 0
+            greenSeekBar.progress = 0
+            blueSeekBar.progress = 0
             redEditText.setText("")
             greenEditText.setText("")
             blueEditText.setText("")
@@ -179,8 +170,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.setRedSwitchState(false)
                 redSeekBar.isEnabled = false
                 redEditText.isEnabled = false
-                viewModel.setRedSeekBarState(0)
-                colorRed = viewModel.getRedSeekBarValue()            }
+            }
             colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
             headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
         }
@@ -201,7 +191,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.setGreenSwitchState(false)
                 greenSeekBar.isEnabled = false
                 greenEditText.isEnabled = false
-                colorGreen = 0
             }
             colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
             headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))
@@ -223,7 +212,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.setBlueSwitchState(false)
                 blueSeekBar.isEnabled = false
                 blueEditText.isEnabled = false
-                colorBlue = 0
             }
             colorView.setBackgroundColor(rgb(colorRed, colorGreen, colorBlue))
             headerText.setTextColor(rgb(colorRed, colorGreen, colorBlue))

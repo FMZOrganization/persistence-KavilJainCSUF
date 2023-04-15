@@ -57,7 +57,19 @@ class PreferencesRepository private constructor(private val dataStore: DataStore
             prefs[key] = value
         }
     }
-    private suspend fun saveSwitchState(key: Preferences.Key<Boolean>, value: Boolean) {
+    private suspend fun saveRedSwitchState(key: Preferences.Key<Boolean>, value: Boolean) {
+        this.dataStore.edit { prefs ->
+            prefs[key] = value
+        }
+    }
+
+    private suspend fun saveGreenSwitchState(key: Preferences.Key<Boolean>, value: Boolean) {
+        this.dataStore.edit { prefs ->
+            prefs[key] = value
+        }
+    }
+
+    private suspend fun saveBlueSwitchState(key: Preferences.Key<Boolean>, value: Boolean) {
         this.dataStore.edit { prefs ->
             prefs[key] = value
         }
@@ -72,14 +84,14 @@ class PreferencesRepository private constructor(private val dataStore: DataStore
     suspend fun saveBlueSeekBarValue(value: Int) {
         saveBlueSeekBarState(BLUESEEKBAR, value)
     }
-    suspend fun saveRedSwitchState(value: Boolean) {
-        saveSwitchState(REDSWITCH, value)
+    suspend fun saveRedSwitchValue(value: Boolean) {
+        saveRedSwitchState(REDSWITCH, value)
     }
-    suspend fun saveGreenSwitchState(value: Boolean) {
-        saveSwitchState(GREENSWITCH, value)
+    suspend fun saveGreenSwitchValue(value: Boolean) {
+        saveGreenSwitchState(GREENSWITCH, value)
     }
-    suspend fun saveBlueSwitchState(value: Boolean) {
-        saveSwitchState(BLUESWITCH, value)
+    suspend fun saveBlueSwitchValue(value: Boolean) {
+        saveBlueSwitchState(BLUESWITCH, value)
     }
 
     companion object {

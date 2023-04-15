@@ -33,21 +33,21 @@ class MyColorViewModel: ViewModel() {
 
     private fun saveRedSwitchState() {
         viewModelScope.launch {
-            prefs.saveRedSwitchState(redSwitchState)
+            prefs.saveRedSwitchValue(redSwitchState)
             Log.d(TAG, "Done saving red switch State $redSwitchState")
         }
     }
 
     private fun saveGreenSwitchState() {
         viewModelScope.launch {
-            prefs.saveGreenSwitchState(greenSwitchState)
+            prefs.saveGreenSwitchValue(greenSwitchState)
             Log.d(TAG, "Done saving green switch State $greenSwitchState")
         }
     }
 
     private fun saveBlueSwitchState() {
         viewModelScope.launch {
-            prefs.saveBlueSwitchState(blueSwitchState)
+            prefs.saveBlueSwitchValue(blueSwitchState)
             Log.d(TAG, "Done saving blue switch State $blueSwitchState")
         }
     }
@@ -73,63 +73,68 @@ class MyColorViewModel: ViewModel() {
         }
     }
 
-    fun loadState(act: MainActivity) {
+    fun loadRedSwitchState(act: MainActivity) {
         viewModelScope.launch {
             prefs.redSwitchState.collectLatest {
                 act.redSwitch.isChecked = it
                 Log.v(TAG, "Done collecting redSwitch state")
             }
         }
+        sleep(100)
+    }
+
+    fun loadGreenSwitchState(act: MainActivity) {
         viewModelScope.launch {
             prefs.greenSwitchState.collectLatest {
                 act.greenSwitch.isChecked = it
                 Log.v(TAG, "Done collecting greenSwitch state")
             }
         }
+        sleep(100)
+    }
+
+    fun loadBlueSwitchState(act: MainActivity) {
         viewModelScope.launch {
             prefs.blueSwitchState.collectLatest {
                 act.blueSwitch.isChecked = it
                 Log.v(TAG, "Done collecting blueSwitch state")
             }
         }
-        sleep(1000)
+        sleep(100)
     }
 
     fun loadRedSeekBarValue() {
-        GlobalScope.launch {
+        viewModelScope.launch {
             prefs.redSeekBarValue.collectLatest {
                 redSeekBarValue = it
                 Log.v(TAG, "Done collecting redSeekBar $redSeekBarValue")
             }
         }
-        sleep(1000)
+        sleep(100)
     }
 
     fun loadGreenSeekBarValue() {
-        GlobalScope.launch {
+        viewModelScope.launch {
             prefs.greenSeekBarValue.collectLatest {
                 greenSeekBarValue = it
                 Log.v(TAG, "Done collecting greenSeekBar $greenSeekBarValue")
             }
         }
-        sleep(1000)
+        sleep(100)
     }
 
     fun loadBlueSeekBarValue() {
-        GlobalScope.launch {
+        viewModelScope.launch {
             prefs.blueSeekBarValue.collectLatest {
                 blueSeekBarValue = it
                 Log.v(TAG, "Done collecting blueSeekbar $blueSeekBarValue")
             }
         }
-        sleep(1000)
+        sleep(100)
     }
 
     fun setRedSwitchState(state: Boolean) {
         this.redSwitchState = state
-        if(!this.redSwitchState) {
-            redSeekBarValue = 0
-        }
         saveRedSwitchState()
     }
 
