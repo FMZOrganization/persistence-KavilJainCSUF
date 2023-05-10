@@ -72,7 +72,18 @@ class MainActivity : AppCompatActivity() {
         colorRed = viewModel.getRedSeekBarValue()
         colorBlue = viewModel.getBlueSeekBarValue()
         colorGreen = viewModel.getGreenSeekBarValue()
-
+        if(!viewModel.getRedSwitchState()) {
+            redSeekBar.isEnabled = false
+            redEditText.isEnabled = false
+        }
+        if(!viewModel.getGreenSwitchState()) {
+            greenEditText.isEnabled = false
+            greenSeekBar.isEnabled = false
+        }
+        if(!viewModel.getBlueSwitchState()) {
+            blueSeekBar.isEnabled = false
+            blueEditText.isEnabled = false
+        }
         if(!redSwitch.isChecked && !greenSwitch.isChecked && !blueSwitch.isChecked) {
             Log.d(TAG, "Inside reset")
             colorView.background = resources.getDrawable(R.drawable.color_background)
